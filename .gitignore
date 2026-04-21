@@ -70,6 +70,11 @@ venv.bak/
 # Archives
 *.zip*
 
+# Local datasets / generated model artifacts
+cs231n/assignments/assignment1/cs231n/datasets/cifar-10-batches-py/
+cs231n/assignments/assignment1/cs231n/datasets/imagenet_val_25.npz
+cs231n/assignments/assignment1/cs231n/saved/*.npy
+
 # OS files
 .DS_Store
 Thumbs.db
