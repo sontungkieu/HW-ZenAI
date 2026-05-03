@@ -1,0 +1,27 @@
+[project]
+name = "hw-zenai"
+version = "0.1.0"
+description = "Notebook environment for HW-ZenAI coursework."
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "cython>=3.0.0",
+    "future>=1.0.0",
+    "h5py>=3.10.0",
+    "imageio>=2.34.0",
+    "ipykernel>=6.29.0",
+    "jupyterlab>=4.2.0",
+    "matplotlib>=3.7.0",
+    "notebook>=7.2.0",
+    "numpy>=1.26.0",
+    "pillow>=10.0.0",
+    "scipy>=1.11.0",
+    "six>=1.16.0",
+]
+
+[project.optional-dependencies]
+pytorch = [
+    "torch>=2.2.0",
+]
+
+[tool.uv]
+package = false
