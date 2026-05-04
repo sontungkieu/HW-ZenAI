@@ -47,7 +47,7 @@ nosetests.xml
 .pyre/
 .pytype/
 .ruff_cache/
-
+*todo.md
 # Jupyter Notebook
 .ipynb_checkpoints/
 
@@ -74,6 +74,10 @@ venv.bak/
 cs231n/assignments/assignment1/cs231n/datasets/cifar-10-batches-py/
 cs231n/assignments/assignment1/cs231n/datasets/imagenet_val_25.npz
 cs231n/assignments/assignment1/cs231n/saved/*.npy
+cs231n/assignments/assignment2/cs231n/datasets/cifar-10-batches-py/
+cs231n/assignments/assignment2/cs231n/datasets/coco_captioning/
+cs231n/assignments/assignment2/cs231n/datasets/*.npz*
+cs231n/assignments/assignment2/cs231n/im2col_cython.c
 
 # OS files
 .DS_Store

@@ -141,7 +141,14 @@ class CaptioningRNN:
         #                                                                          #
         # You also don't have to implement the backward pass.                      #
         ############################################################################
-
+        h0 = affine_forward(features, W_proj, b_proj)
+        word_vectors = word_embedding_forward(captions_in, W_embed)
+        if self.cell_type == "rnn":
+            h = rnn_forward(word_vectors, h0, Wx, Wh, b)
+        else:
+            h = lstm_forward(word_vectors, h0, Wx, Wh, b)
+        scores = temporal_affine_forward(h, W_vocab, b_vocab)
+        loss = temporal_softmax_loss(scores, captions_out, mask)
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -173,8 +180,9 @@ class CaptioningRNN:
           of captions should be the first sampled word, not the <START> token.
         """
         N = features.shape[0]
-        captions = self._null * torch.ones((N, max_length), dtype=torch.long)
-
+        captions = self._null * torch.ones(
+            (N, max_length), dtype=torch.long, device=features.device
+        )
         # Unpack parameters
         W_proj, b_proj = self.params["W_proj"], self.params["b_proj"]
         W_embed = self.params["W_embed"]
@@ -205,6 +213,21 @@ class CaptioningRNN:
         # NOTE: we are still working over minibatches in this function. Also if   #
         # you are using an LSTM, initialize the first cell state to zeros.        #
         ###########################################################################
+        h = affine_forward(features, W_proj, b_proj)
+        c = torch.zeros_like(h)
+        prev_word = torch.full(
+            (N,), self._start, dtype=torch.long, device=features.device
+        )
+
+        for t in range(max_length):
+            word_vector = word_embedding_forward(prev_word, W_embed)
+            if self.cell_type == "rnn":
+                h = rnn_step_forward(word_vector, h, Wx, Wh, b)
+            else:
+                h, c = lstm_step_forward(word_vector, h, c, Wx, Wh, b)
+            scores = affine_forward(h, W_vocab, b_vocab)
+            prev_word = torch.argmax(scores, dim=1)
+            captions[:, t] = prev_word
 
         ############################################################################
         #                             END OF YOUR CODE                             #

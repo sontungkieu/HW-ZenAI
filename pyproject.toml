@@ -21,6 +21,7 @@ dependencies = [
 [project.optional-dependencies]
 pytorch = [
     "torch>=2.2.0",
+    "torchvision>=0.17.0",
 ]
 
 [tool.uv]

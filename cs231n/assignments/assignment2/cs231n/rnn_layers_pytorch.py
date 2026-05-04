@@ -39,7 +39,7 @@ def rnn_step_forward(x, prev_h, Wx, Wh, b):
     Returns a tuple of:
     - next_h: Next hidden state, of shape (N, H)
     """
-    next_h = None
+    next_h = torch.tanh(x @ Wx + prev_h @ Wh + b)
     ##############################################################################
     # TODO: Implement a single forward step for the vanilla RNN.                 #
     ##############################################################################
@@ -67,7 +67,12 @@ def rnn_forward(x, h0, Wx, Wh, b):
     Returns a tuple of:
     - h: Hidden states for the entire timeseries, of shape (N, T, H)
     """
-    h = None
+    h_list = []
+    prev_h = h0
+    for t in range(x.shape[1]):
+        prev_h = rnn_step_forward(x[:, t, :], prev_h, Wx, Wh, b)
+        h_list.append(prev_h)
+    h = torch.stack(h_list, dim=1)
     ##############################################################################
     # TODO: Implement forward pass for a vanilla RNN running on a sequence of    #
     # input data. You should use the rnn_step_forward function that you defined  #
@@ -95,7 +100,7 @@ def word_embedding_forward(x, W):
     Returns a tuple of:
     - out: Array of shape (N, T, D) giving word vectors for all input words.
     """
-    out = None
+    out = W[x]
     ##############################################################################
     # TODO: Implement the forward pass for word embeddings.                      #
     #                                                                            #
@@ -128,7 +133,15 @@ def lstm_step_forward(x, prev_h, prev_c, Wx, Wh, b):
     - next_h: Next hidden state, of shape (N, H)
     - next_c: Next cell state, of shape (N, H)
     """
-    next_h, next_c = None, None
+    H = prev_h.shape[1]
+    a = x @ Wx + prev_h @ Wh + b
+    i = torch.sigmoid(a[:, :H])
+    f = torch.sigmoid(a[:, H:2 * H])
+    o = torch.sigmoid(a[:, 2 * H:3 * H])
+    g = torch.tanh(a[:, 3 * H:])
+
+    next_c = f * prev_c + i * g
+    next_h = o * torch.tanh(next_c)
     #############################################################################
     # TODO: Implement the forward pass for a single timestep of an LSTM.        #
     # You may want to use the numerically stable sigmoid implementation above.  #
@@ -162,7 +175,13 @@ def lstm_forward(x, h0, Wx, Wh, b):
     Returns a tuple of:
     - h: Hidden states for all timesteps of all sequences, of shape (N, T, H)
     """
-    h = None
+    h_list = []
+    prev_h = h0
+    prev_c = torch.zeros_like(h0)
+    for t in range(x.shape[1]):
+        prev_h, prev_c = lstm_step_forward(x[:, t, :], prev_h, prev_c, Wx, Wh, b)
+        h_list.append(prev_h)
+    h = torch.stack(h_list, dim=1)
     #############################################################################
     # TODO: Implement the forward pass for an LSTM over an entire timeseries.   #
     # You should use the lstm_step_forward function that you just defined.      #
