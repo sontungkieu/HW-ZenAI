@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Notebook environment for HW-ZenAI coursework."
 requires-python = ">=3.10,<3.11"
 dependencies = [
+    "clip",
     "cython>=3.0.0",
+    "decord>=0.6.0",
+    "ftfy>=6.3.1",
     "future>=1.0.0",
     "h5py>=3.10.0",
     "imageio>=2.34.0",
@@ -13,9 +16,17 @@ dependencies = [
     "matplotlib>=3.7.0",
     "notebook>=7.2.0",
     "numpy>=1.26.0",
+    "opencv-python>=4.13.0.92",
+    "pandas>=2.3.3",
     "pillow>=10.0.0",
+    "regex>=2026.5.9",
+    "scikit-learn>=1.7.2",
     "scipy>=1.11.0",
     "six>=1.16.0",
+    "tensorflow>=2.20.0",
+    "tensorflow-datasets>=4.9.10",
+    "thop>=0.1.1.post2209072238",
+    "tqdm>=4.67.3",
 ]
 
 [project.optional-dependencies]
@@ -26,3 +37,6 @@ pytorch = [
 
 [tool.uv]
 package = false
+
+[tool.uv.sources]
+clip = { git = "https://github.com/openai/CLIP.git" }

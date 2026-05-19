@@ -78,7 +78,21 @@ cs231n/assignments/assignment2/cs231n/datasets/cifar-10-batches-py/
 cs231n/assignments/assignment2/cs231n/datasets/coco_captioning/
 cs231n/assignments/assignment2/cs231n/datasets/*.npz*
 cs231n/assignments/assignment2/cs231n/im2col_cython.c
+cs231n/assignments/assignment3/data/
+cs231n/assignments/assignment3/cs231n/datasets/cifar-10-batches-py/
+cs231n/assignments/assignment3/cs231n/datasets/coco_captioning/
+cs231n/assignments/assignment3/cs231n/datasets/*.npz*
+cs231n/assignments/assignment3/cs231n/datasets/*.pt
+cs231n/assignments/assignment3/cs231n/datasets/*.pkl
+cs231n/assignments/assignment3/cs231n/exp/pretrained/*.pt
+cs231n/assignments/assignment3/pretrained_model/*.pth
+cs231n/assignments/assignment3/results/
+cs231n/assignments/assignment3/a3_code_submission.zip
+cs231n/assignments/assignment3/a3_inline_submission.pdf
+cs231n/assignments/assignment3/dino_res.mp4
 
 # OS files
 .DS_Store
 Thumbs.db
+__MACOSX/
+._*
